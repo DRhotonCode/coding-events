@@ -1,8 +1,6 @@
 package org.launchcode.codingevents.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 /**
@@ -17,6 +15,13 @@ public class Event {
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
 
+    @NotBlank(message = "Venue is required")
+    @Size(max = 30, message = "Must be no more than 30 characters.")
+    private String venue;
+
+    @Min(value = 1, message = "Must be greater than zero.")
+    private int numberOfAttendees;
+
     @Size(max = 500, message = "Description too long!")
     private String description;
 
@@ -24,11 +29,17 @@ public class Event {
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    @AssertTrue(message = "Requires registration.")
+    private boolean requiresRegistration;
+
+    public Event(String name, String venue, int numberOfAttendees, String description, String contactEmail, boolean requiresRegistration) {
         this();
         this.name = name;
+        this.venue = venue;
+        this.numberOfAttendees = numberOfAttendees;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.requiresRegistration = requiresRegistration;
     }
 
     public Event() {
@@ -58,6 +69,30 @@ public class Event {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public int getNumberOfAttendees() {
+        return numberOfAttendees;
+    }
+
+    public void setNumberOfAttendees(int numberOfAttendees) {
+        this.numberOfAttendees = numberOfAttendees;
+    }
+
+    public boolean isRequiresRegistration() {
+        return requiresRegistration;
+    }
+
+    public void setRequiresRegistration(boolean requiresRegistration) {
+        this.requiresRegistration = requiresRegistration;
     }
 
     public int getId() {
